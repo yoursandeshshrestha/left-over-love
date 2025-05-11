@@ -5,6 +5,13 @@ const morgan = require("morgan");
 const config = require("./config/config");
 const connectDB = require("./config/database");
 const logger = require("./utils/logger");
+const authRoutes = require("./routes/authRoutes");
+const foodRoutes = require("./routes/foodRoutes");
+const ngoRoutes = require("./routes/ngoRoutes");
+const adminRoutes = require("./routes/adminRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
+const reputationRoutes = require("./routes/reputationRoutes");
+const statsRoutes = require("./routes/statsRoutes");
 
 // Initialize express app
 const app = express();
@@ -37,9 +44,17 @@ app.get("/health", (req, res) => {
   logger.debug("Health check performed");
 });
 
+// Mount auth routes
+app.use("/auth", authRoutes);
+app.use("/food", foodRoutes);
+app.use("/ngo", ngoRoutes);
+app.use("/admin", adminRoutes);
+app.use("/notify", notificationRoutes);
+app.use("/reputation", reputationRoutes);
+app.use("/stats", statsRoutes);
+
 // Create the logs directory if it doesn't exist
 const fs = require("fs");
-const path = require("path");
 if (!fs.existsSync("logs")) {
   fs.mkdirSync("logs");
 }
